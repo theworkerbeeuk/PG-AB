@@ -1,310 +1,43 @@
-<!doctype html>
-<html class="no-js">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title></title>
-    <meta name="description" content="">
-    <!--meta name="viewport" content="width=device-width"/-->
-    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" />
-    <meta content="no" name="msapplication-tap-highlight">
-      <!-- MACE Fix - add in cache control headers!!! -->
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
-      <!--
-    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, target-densityDpi=device-dpi" />
--->   
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-
-        <!-- build:css(.tmp) styles/main.css -->
-        <link rel="stylesheet" href="styles/main.css">
-        <link rel="stylesheet" href="styles/yj.css">
-        <link rel="stylesheet" href="bower_components/angular/angular-csp.css">
-        <!-- endbuild -->
-      	
-        <link href="styles/ie.css" rel="stylesheet">
-	  
-        <script type="text/javascript" src="scripts/GALocalStorage.js"></script>
-        <script>
-         var doc = document.documentElement;
-         doc.setAttribute('data-useragent', navigator.userAgent);
-
-         ga_storage._setAccount('UA-49111528-1');
-         ga_storage._trackPageview('/index.html','start');
-            
-//       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-//       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-//       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-//       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-//
-//       ga('create', 'UA-49111528-1');
-//       ga('send', 'pageview');
-            
-        </script> 
-  </head>
-  <body ng-app="yellowJacketApp" ng-cloak class="ng-cloak">
-    
-
-    <div ng-hide="nonavbar" class="main navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller="NavCtrl">
-      <div>
-        <div id="loading" ng-show="loading && signedIn"> <i class="fa fa-spin fa-spinner"></i> {{loading}} ...</div>
-        <span class="brand" ><img src="img/logo.png"></span>
-        <div class="navbar-header" ng-show="menu">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-        </div>
-        <div class="collapse navbar-collapse">
-          <ul id="adjustnav" class="nav navbar-nav" ng-show="menu">
-             <li ng-repeat="n in navlist" class="{{n.activeClass}}">
-                <a href="" ng-click="goto(n);">{{n.name}}</a>
-            </li>
+<!DOCTYPE html>
 <!--
-            <li class="divider"></li>
-            <li><a href="#" ng-click="collapse(); showLogout();">Logout</a></li>
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
 -->
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </div>
-
-    <!-- Add your site or application content here -->
-    <div id="mcid" class="main-container container-fluid">
-        <div class="row-fluid" ng-view=""></div>
-    </div> 
-
-      
-   
-      
-<div class="modal fade" id="notificationModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">{{locale.notification}}</h4>
-      </div>
-      <div class="modal-body">
-        {{notification}}
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">{{locale.close}}</button>
-      </div>
-    </div>
-  </div>
-</div>      
-      
-
-      
-
-      
-        <script src="bower_components/jquery/jquery.js"></script>
-        <script src="scripts/sha256.js"></script>
-      
-        <script src="scripts/crypto/aes.js"></script>
-        <script src="scripts/crypto/mode-ecb-min.js"></script>
-        <script src="scripts/crypto/tripledes.js"></script>
-        <script src="scripts/jsonFormatter.js"></script>
-        <script src="scripts/jpeg_encoder_basic.js"></script>
-        <script src="bower_components/bootstrap-switch/build/js/bootstrap-switch.js"></script>
-        <script src="bower_components/browser-detection/browser-detection.js"></script>
-        <script src="bower_components/jquery.panzoom/dist/jquery.panzoom.min.js"></script>
-        <script src="bower_components/jquery-idletimer/dist/idle-timer.min.js"></script>
-        <script src="bower_components/lz-string/libs/lz-string-1.3.3-min.js"></script>
-        <script src="bower_components/lz-string/libs/base64-string-v1.1.0.js"></script>
-        <script src="bower_components/sass-bootstrap/docs-assets/js/jszip.js"></script>
-      
-        <!-- build:js scripts/plugins.js -->
-        <script src="bower_components/sass-bootstrap/js/affix.js"></script>
-        <script src="bower_components/sass-bootstrap/js/alert.js"></script>
-        <script src="bower_components/sass-bootstrap/js/button.js"></script>
-        <script src="bower_components/sass-bootstrap/js/carousel.js"></script>
-        <script src="bower_components/sass-bootstrap/js/transition.js"></script>
-        <script src="bower_components/sass-bootstrap/js/collapse.js"></script>
-        <script src="bower_components/sass-bootstrap/js/dropdown.js"></script>
-        <script src="bower_components/sass-bootstrap/js/modal.js"></script>
-        <script src="bower_components/sass-bootstrap/js/scrollspy.js"></script>
-        <script src="bower_components/sass-bootstrap/js/tab.js"></script>
-        <script src="bower_components/sass-bootstrap/js/tooltip.js"></script>
-        <script src="bower_components/sass-bootstrap/js/popover.js"></script>
-        <!-- endbuild -->
-
-        <!-- build:js scripts/modules.js -->
-        <script src="bower_components/angular/angular.js"></script>
-        <script src="bower_components/angular-resource/angular-resource.js"></script>
-        <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-        <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-        <script src="bower_components/angular-route/angular-route.js"></script>
-        <script src="bower_components/angular-bootstrap-switch/dist/angular-bootstrap-switch.js"></script>
-        <script src="bower_components/angular-touch/angular-touch.js"></script>
-        <script src="bower_components/angular-bindonce/bindonce.min.js"></script>
-        <!-- angular ui bootstrap messes up audits carousel which is written in jquery 
-        <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-        -->
-        <!--script src="bower_components/angular-animate/angular-animate.js"></script-->
-        <!-- endbuild -->
- 
-        <!-- important to have this after angular but before the other scripts -->
-        <!--script src="js/toaster.js"></script-->
-        <script src="phonegap.js"></script>
-        <script src="js/index.js"></script>
-        <script>
-            
-            (function(){
-                if(window.console && console.log){
-                    var old = console.log;
-                    console.log = function(){
-                        try {
-                            //Array.prototype.unshift.call(arguments, 'R-OVR: '); <-- not working in android
-                            var dev = false;
-                            if (dev) {
-                              old.apply(this, arguments)
-                            }
-                        }
-                        catch(ex) {}
-                    }
-                }  
-            })();
-
-            
-            // now in app js... need to call addEventListener in the controller
-            document.addEventListener('deviceready', broadcastConnection, false);
-            document.addEventListener("backbutton", function() { }, false);
-
-            function checkConnection() {
-                var online=false;
-                if (navigator) {
-                    if (navigator.onLine==true) { online=true;}
-                }
-                //Default: setting connection as NONE
-                var networkState="none";
-                //Online: setting connection as UNKNOWN");
-                if (online==true) networkState="unknown";
-                //If navigator.connection.type available, use it
-                if (navigator 
-                    && navigator.network 
-                    && navigator.network.connection 
-                    && navigator.network.connection.type) {
-                    networkState = navigator.network.connection.type;
-                }
-                /*
-                Connection.UNKNOWN
-                Connection.ETHERNET
-                Connection.WIFI
-                Connection.CELL
-                Connection.CELL_2G
-                Connection.CELL_3G
-                Connection.CELL_4G
-                Connection.NONE
-                */
-                return networkState;
-            }
-            function isBroadband(networkState) {
-                if (Connection) {
-                    if (networkState==Connection.ETHERNET
-                        || networkState==Connection.WIFI) {
-                        return true;
-                    }
-                }
-                return false;
-            }
-            function isMobile(networkState) {
-                if (Connection) {
-                    if (networkState==Connection.CELL
-                        || networkState==Connection.CELL_2G
-                        || networkState==Connection.CELL_3G
-                        || networkState==Connection.CELL_4G) {
-                        return true;
-                    }
-                }
-                return false;
-            }
-            function broadcastConnection() {
-                var sc = angular.element(document.getElementById('mcid')).scope(); 
-                sc.$apply(function() {
-                    sc.netstat = checkConnection();
-                    setTimeout(function() {
-                      sc.$broadcast("NETSTAT", sc.netstat); 
-                    }, 1000); // device needs time for scripts to load..so delay firing this.
-                });
-                if (window.cordova.logger) {
-                    window.cordova.logger.__onDeviceReady();
-                }
-            }
-
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <title>Hello World</title>
+    </head>
+    <body>
+        <div class="app">
+            <h1>PhoneGap</h1>
+            <div id="deviceready" class="blink">
+                <p class="event listening">Connecting to Device</p>
+                <p class="event received">Device is Ready</p>
+            </div>
+        </div>
+        <script type="text/javascript" src="phonegap.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript">
             app.initialize();
-            
-//            // sort out nav bar height in landscape on mobiles?
-//            var setMenuH = function() {
-//                var h = window.innerHeight;
-//                var w = window.innerWidth;
-//                if (w < 1024) {
-//                    if (w > h) {
-//                        $('#adjustnav').css('height', (h-90)+'px');
-//                    }
-//                    else 
-//                        $('#adjustnav').css('height', 'auto');
-//                }
-//             }
-//             setMenuH();
-//             window.addEventListener('orientationchange', setMenuH);
-            
         </script>
-
-
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/app.js"></script>
-        <script src="scripts/services/services-steria.js"></script>
-        <script src="scripts/services/ui-steria.js"></script>
-        <script src="scripts/services/config-steria.js"></script>
-      
-        <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/signin.js"></script>
-        <script src="scripts/controllers/createpin.js"></script>
-        <script src="scripts/controllers/confirmpin.js"></script>
-        <script src="scripts/controllers/tncs.js"></script>
-        <script src="scripts/controllers/netprefs.js"></script>
-        <script src="scripts/controllers/selcomis.js"></script>
-        <script src="scripts/controllers/commissn.js"></script>
-        <script src="scripts/controllers/obsvrtn.js"></script>
-        <script src="scripts/controllers/location.js"></script>
-        <script src="scripts/controllers/obsvrsum.js"></script>
-        <script src="scripts/controllers/obsvrpic.js"></script>
-        <script src="scripts/controllers/obsvract.js"></script>
-        <script src="scripts/controllers/commsndtl.js"></script>
-        <script src="scripts/controllers/sataction.js"></script>
-        <script src="scripts/controllers/createaction.js"></script>
-        <script src="scripts/controllers/actiondetails.js"></script>
-        <script src="scripts/controllers/actionedit.js"></script>
-        <script src="scripts/controllers/actionend.js"></script>
-        <script src="scripts/controllers/actionlist.js"></script>
-        <script src="scripts/controllers/actdetview.js"></script>
-        <script src="scripts/controllers/rejectaction.js"></script>
-        <script src="scripts/controllers/acceptaction.js"></script>
-        <script src="scripts/controllers/reassignaction.js"></script>
-        <script src="scripts/controllers/reassignuser.js"></script>
-        <script src="scripts/controllers/closeaction.js"></script>
-        <script src="scripts/controllers/socialnets.js"></script>
-        <script src="scripts/controllers/logout.js"></script>
-        <script src="scripts/controllers/browser.js"></script>
-        <script src="scripts/controllers/inspstatus.js"></script>
-        <script src="scripts/controllers/capturepic.js"></script>
-        <script src="scripts/controllers/audanswer.js"></script>
-        <script src="scripts/controllers/audselqs.js"></script>
-        <script src="scripts/controllers/audstatus.js"></script>
-        <script src="scripts/controllers/audmenu.js"></script>
-        <script src="scripts/controllers/floorplan.js"></script>
-        <script src="scripts/controllers/changepin.js"></script>
-         <script src="scripts/services/pinService.js"></script>
-         <script src="scripts/controllers/contactus.js"></script>
-         <script src="scripts/controllers/dereg.js"></script>
-         <script src="scripts/services/yjService.js"></script>
-         <script src="scripts/services/cryptoService.js"></script>
-         <!-- endbuild -->
-      
-
-      </body>
+    </body>
 </html>
