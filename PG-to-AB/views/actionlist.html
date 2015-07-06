@@ -1,0 +1,120 @@
+<h4 class="signin-heading black">{{locale.actions}}
+<!--
+    {{ actionList.length > 0 ? '(' + actionList.length + ')' : '' }}
+-->
+</h4>
+
+<div class="container" ng-hide="loadingPhotos">
+    
+    <div class="dropdown">
+    <button class="btn btn-default btn-block btn-lg" data-toggle="dropdown">
+        <div class="wrap pad-left pull-left">
+      {{selectedCommission.title}} 
+            <span ng-show="selectedCommission.referenceNo">
+            ({{selectedCommission.referenceNo}})
+            </span>
+        </div>
+        <div class="pull-right caret caret-right"></div>
+<!-- caret not showing needs style to be white/inverse as black on black not showing-->
+    </button>
+    <ul class="actionlist pull-right dropdown-menu" role="menu">
+      <li><a href="" ng-click="all()">{{locale.all}}</a></li>
+      <li class="divider"></li>
+      <li ng-repeat="c in commissions | orderBy:'title'" ng-hide="commissionsWithoutAction[c.id]">
+          <a class="wrap" href="" ng-click="select(c)">{{c.title}} ({{c.referenceNo}})</a>
+      </li>
+        
+    </ul>
+  </div>
+<p></p>
+<table class="table comms table-bordered">
+<tr class="black action-heading">
+    <td class="date">
+        <a class="btn btn-default btn-block" ng-click="reverse=!reverse">{{locale.date}}
+        <span class="pull-right" ng-class="{'caret-up':!reverse,'caret':reverse}"></span>
+        </a>
+    </td>
+    <td class="data">
+      <a class="pull-right overdue btn"
+         ng-class="{'btn-white':!filterod, 'btn-grey':filterod}"
+         ng-click="overduefilter()">
+          {{locale.overdue}}
+        </a> 
+    
+      <a class="pull-right unread btn btn-white" ng-click="unread()"
+          ng-class="{'btn-white':!filterur, 'btn-grey':filterur}"
+         >{{locale.unread}}&nbsp;
+        </a>
+  
+    </td>
+</tr>
+<tr ng-repeat="al in actionList | orderBy:'ddate':reverse | commission:{commissionTitle:selectedCommission.title} | overdue:filterod  | unread:filterur" 
+    ng-class="{'action-read':al.read}">
+<td class="centre">{{al.ddate | date:'dd/MM/yy'}}
+    <br><br>
+    <p ng-show="overdue(al.dueDate)">
+        <i class="fa fa-exclamation-triangle fa-3x"></i>
+    </p>
+</td>
+<td><!-- Commission Name (commission ref) note shown only if "all commisisons" selected this is not shown if a specific commission is selected -->
+
+        <a href="" ng-click="detail(al)" class="actions-black"> 
+            <div class='pic-coords pull-right'>{{al.observationId}}/{{al.actionId}}</div>
+            <span class='clearfix'></span>
+       <strong>{{al.commissionTitle}} ({{al.commissionReferenceNo}})</strong>
+       <i class="pull-right alsize glyphicon glyphicon-chevron-right"></i>
+       
+<!--
+            
+        <p>Created by: {{al.createdByUserId}}/{{uid}}</p>
+-->
+        <!-- observation type description -->
+        <p><b>{{locale.obsCat}}/{{locale.type}}:</b> {{al.observationCatDesc}}/{{al.observationTypeName}}<br>    
+        <!-- observation summary text -->
+            
+<!-- note this may need to change if it is decided that summary is not the field being retained for the 500 character descriptions - in which case the asusmption is that the observationDescription field will be used - code commented out for now -->  
+            
+          <b>{{locale.observation}}:</b><br>
+            <split-text text="{{al.observationSummary}}"></split-text>
+            <br>
+<!--        {{al.observationDescription }}                -->
+            
+<!--
+           <div  ng-show="al.observationPhotos">
+            <img width="10" src="img">
+            </div>
+-->
+        </p>
+        <p class="clearfix"></p>
+        <!-- action type-->
+        <p><b>{{locale.actionType1}}:</b> {{al.actionTypeName }}<br>
+           <b>{{locale.action}}:</b><br>
+        <!-- action desc-->
+            <split-text text="{{al.actionSummary}}"></split-text><br>
+            
+
+<!--
+<div  ng-repeat="p in al.actionPhotos">
+    {{p}}
+            <img class="obs-img img-thumbnail" ng-src="{{config.fptarget}}/upload/action/{{al.actionID}}-{{p.photoID}}-{{p.photoName}}">
+            </div>
+-->
+        </p>
+    <i ng-show="al.createdByUserId == uid" class="action-own fa fa-ellipsis-h pull-right"></i>
+        </a>
+    </td>          
+</tr>
+
+</table>
+<p class="space"/>
+
+</div>
+<div ng-show="loadingPhotos" class="mainspin" centred-spin>
+</div>
+
+
+<div class="navbar navbar-fixed-bottom pad-left pad-right black">
+    <div class="centre">
+        <button type="submit" class="pull-left btn btn-white btn-lg" ng-click="goback()">{{locale.back}}</button>        
+    </div>
+</div>

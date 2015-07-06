@@ -1,0 +1,173 @@
+<h4 class="signin-heading black fixed-top">{{selectedal.commissionTitle}} ({{selectedal.commissionReferenceNo}})</h4>
+<div class="container" ng-hide="loadingaction">
+    <div class="actdetail" id="adid">
+        <div class="border">
+            <h4>{{locale.action}} {{locale.details}}</h4>
+            <div class="white">
+                <p class='pic-coords'>
+                    <b>ID:</b>{{selectedal.actionId}}/{{selectedal.actionStateId}}</p>
+                <h5>
+                    <strong>{{locale.actionType1}}</strong>
+                    <p>{{selectedal.actionTypeName}}</p>
+                </h5>
+                <h5>
+                    <strong>{{locale.action}} {{locale.description}}</strong>
+                    <p>{{selectedal.actionSummary}}</p>
+                </h5>
+                <h5 ng-show="selectedal.actionPhotos">
+                    <strong>{{locale.action}} {{locale.photos}}</strong>
+                </h5>
+                <p>
+                    <!-- <button ng-show="selectedal.actionPhotos" class="btn btn-lg btn-default" ng-click="view()">View  </button>
+-->
+                    <div ng-show="selectedal.actionPhotos.length > 0" class="view-img-container">
+                        <div id="view-body">
+                            <div style="position:relative;">
+                                <img src="" id="viewmodalimg">
+                                <div id="viewactionmarker" class="markerimg"></div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="pull-left">{{currentActionIndex+1}}/{{selectedal.actionPhotos.length}}</div>
+                            <span ng-click="prevActionPhoto()">
+                                <i class="fa fa-chevron-left fa-2x"></i>
+                            </span>&nbsp;&nbsp;
+                            <span ng-click="nextActionPhoto()">
+                                <i class="fa fa-chevron-right fa-2x"></i>
+                            </span>
+                        </div>
+                    </div>
+                </p>
+                <h5>
+                    <strong>{{locale.action}} {{locale.responses}}</strong>
+                    <p></p>
+                    <table class="table table-condensed">
+                        <tr ng-repeat="astate in selectedal.actionStateDetails | reverse">
+                            <td>
+                                <div>
+                                    <div class="row">
+                                        <div class="col-xs-5"><strong>{{astate.dateCreated | actiontime}}</strong></div>
+                                        <div class="col-xs-7">
+                                            <strong>{{astate.actionStateName}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                    <div class="col-xs-12">{{astate.actionTaken}}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-5">
+                                            <b>Assigned to:</b>
+                                        </div>
+                                        <div class="col-xs-7">{{astate.assignedToUsername}}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-5">
+                                            <b>Created by:</b>
+                                        </div>
+                                        <div class="col-xs-7">{{astate.actionCreatedByUsername}}</div>
+                                    </div>
+                                    <br>
+                                    <div ng-show="actionStatePhotos[astate.actionStateDetailId].length > 0" class="view-img-container">
+                                        <div id="state-view-body{{astate.actionStateDetailId}}">
+                                            <div style="position:relative;">
+                                                <img src="" id="viewstateimg{{astate.actionStateDetailId}}">
+                                                <div id="viewstatemarker{{astate.actionStateDetailId}}" class="markerimg"></div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <div class="pull-left">{{currentStateIndex[astate.actionStateDetailId]+1}}/{{actionStatePhotos[astate.actionStateDetailId].length}}</div>
+                                            <span ng-click="prevStatePhoto(astate.actionStateDetailId)">
+                                                <i class="fa fa-chevron-left fa-2x"></i>
+                                            </span>&nbsp;&nbsp;
+                                            <span ng-click="nextStatePhoto(astate.actionStateDetailId)">
+                                                <i class="fa fa-chevron-right fa-2x"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </h5>
+            </div>
+        </div>
+        <div class="border">
+            <h4>{{locale.obsdetails}}</h4>
+            <div class="white">
+                <p class='pic-coords'>
+                    <b>ID:</b>{{selectedal.observationId}}</p>
+                <h5>
+                    <strong>{{locale.observation}} {{locale.summary}}</strong>
+                    <p>{{selectedal.observationSummary}}</p>
+                </h5>
+                <h5 ng-show="selectedal.observationPhotos">
+                    <strong>{{locale.observation}} {{locale.photos}}</strong>
+                </h5>
+                <p>
+                    <!-- <button ng-show="selectedal.observationPhotos" class="btn btn-lg btn-default" ng-click="view('obs')">View  </button>
+-->
+                    <div ng-show="selectedal.observationPhotos.length > 0" class="view-img-container">
+                        <div id="obs-view-body">
+                            <div style="position:relative;">
+                                <img src="" id="viewobsimg">
+                                <div id="viewobsmarker" class="markerimg"></div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="pull-left">{{currentObsIndex+1}}/{{selectedal.observationPhotos.length}}</div>
+                            <span ng-click="prevObsPhoto()">
+                                <i class="fa fa-chevron-left fa-2x"></i>
+                            </span>&nbsp;&nbsp;
+                            <span ng-click="nextObsPhoto()">
+                                <i class="fa fa-chevron-right fa-2x"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- <div class="view-fp" ng-repeat="p in selectedal.observationPhotos">
+                        <div style="position:relative" >
+                              <div class="centre"> 
+    <img width="{{rwidth}}" class="img-thumbnail" load name="{{p.photoName}}" ng-model="p.dataurl" src="{{p.dataurl}}">
+                    <i id="op{{$index}}" class="fa fa-map-marker fa-2x shadow-stroke" ></i>
+                             </div>
+                        </div>
+                     <div class='pic-coords'>[{{p.xPosition}}, {{p.yPosition}}]</div>
+                </div>
+-->
+                </p>
+            </div>
+        </div>
+        <div class="border">
+            <h4>{{locale.locationDetails}}</h4>
+            <div class="white">
+                <h5>
+                    <strong>{{locale.locationDesc}}</strong>
+                    <p>{{selectedal.observationLocation}}</p>
+                </h5>
+                <h5 ng-show="selectedal.floorPlanId != 0 || selectedal.observationLocationName">
+                    <strong>{{locale.locationFloorplan}}</strong>
+                    <p>{{selectedal.observationLocationName}}</p>
+                </h5>
+                <div class="view-fp" ng-show="selectedal.floorPlanId != 0">
+                    <div style="position:relative" class="centre">
+                        <div id="vflrcontainer" style="position:relative">
+                            <img id="vflrimg" src="" class="floor-border">
+                            <div id="floormarker" class="markerimg"></div>
+                        </div>
+                    </div>
+                </div>
+                <p></p>
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-show="loadingaction" class="mainspin" centred-spin>
+</div>
+<p class="space"></p>
+<!-- note both these nav bars needed but need to do ng-show/hide based on business rule -->
+<div class="navbar navbar-fixed-bottom pad-left pad-right black" id="actiondetailbtn">
+    <button type="submit" class="pull-left btn btn-white btn-lg" ng-click="back();">{{locale.back}}</button>&nbsp;
+    <button type="submit" class="centre btn btn-yellow btn-lg" ng-click="reassignuser()" ng-hide="hideReassign">{{locale.reassign}}</button>&nbsp;
+    <button type="submit" class="centre btn btn-danger btn-lg" ng-click="reject()">{{locale.reject}}</button>
+    <button type="submit" class="pull-right btn btn-success btn-lg" ng-click="close()" ng-show="ownAction">{{locale.close}}
+        <button type="submit" class="pull-right btn btn-success btn-lg" ng-click="accept()" ng-hide="ownAction">{{locale.continue}}</button>
+</div>

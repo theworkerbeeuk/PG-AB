@@ -1,0 +1,77 @@
+<div class="control-group">
+    <h4 class="signin-heading black">{{locale.newObs}}</h4>
+    <div class="signin">
+        <blockquote class="error" ng-show="obserr">
+            <h5 class="text-danger">{{obserr}}</h5>
+        </blockquote>
+    </div>
+    <div class="panel-group col-md-12" id="accordion">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <div class="accordion-toggle" ng-click="ctoggle(0)" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                        <b>
+                            <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': copen[0], 'glyphicon-chevron-right': !copen[0]}"></i>{{locale.whatDidYouSee}}</b>&nbsp;{{observation.situation.name}}
+                        </div>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse {{in[0]}}">
+                <div class="panel-body">
+                    <div ng-repeat="s in observationPerformance" class="btn-link btn-block" type="button" ng-click="situation(s)" data-toggle="collapse" data-parent="#accordion" href="#collapseOne #collapseTwo">
+                        <!--i class="pull-left glyphicon glyphicon-chevron-right"></i-->&nbsp;{{s.name}} ({{detail(s)}})</div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <div class="accordion-toggle" ng-click="ctoggle(1)" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                        <b>
+                            <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': copen[1], 'glyphicon-chevron-right': !copen[1]}"></i>{{locale.whichCat}}</b>&nbsp;{{observation.cat.name}}</div>
+                </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse {{in[1]}}">
+                <div class="panel-body">
+                    <div ng-repeat="t in observationCategory.observationCategories  | orderBy:'name'" class="btn-block btn-link" type="button" ng-click="cat(t)" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo #collapseThree">
+                        <!--i class="pull-left glyphicon glyphicon-chevron-right"></i-->&nbsp;{{t.name}}</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <div class="accordion-toggle" ng-click="ctoggle(2)" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                        <b>{{locale.whichType}} {{currentCat}}</b>
+                        <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': copen[2], 'glyphicon-chevron-right': !copen[2]}"></i>&nbsp;{{observation.type.name}}</div>
+                </h4>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div ng-repeat="u in observation.cat.observationTypes | orderBy:'name'" class="btn-block btn-link" type="button" ng-click="type(u)" data-toggle="collapse" data-parent="#accordion" href="#collapseThree {{collapse4}}">{{u.name}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <div class="accordion-toggle" ng-click="ctoggle(3)" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+                        <div class="width-fix"><b>{{locale.respOrg}}</b>&nbsp;{{observation.resporg.organisationName}} </div><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': copen[3], 'glyphicon-chevron-right': !copen[3]}"></i>
+                    </div>
+                </h4>
+            </div>
+            <div id="collapseFour" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div ng-repeat="s in commissionsOrgs[cid] | orderBy:'organisationName'" class="btn-link btn-block" type="button" ng-click="organisation(s)" data-toggle="collapse" data-parent="#accordion" href="collapseThree #collapseFour">&nbsp;{{s.organisationName}}</div>
+                </div>
+            </div>
+        </div>
+        <p class="space"></p>
+    </div>
+</div>
+<p class="space"></p>
+<div class="navbar navbar-fixed-bottom pad-left pad-right black">
+    <button class="btn btn-lg btn-white pull-left" type="button" ng-click="goback()">{{locale.back}}</button>
+    <button class="btn btn-lg btn-success pull-right" type="button" ng-click="confirm(a)">{{locale.continue}}</button>
+</div>
+</div>

@@ -1,0 +1,72 @@
+<div class="control-group">
+    <span ng-hide="changepin">
+        <h4 class="signin-heading black" ng-hide="signedIn">{{locale.createpin}}</h4>
+        <h4 class="signin-heading black" ng-show="signedIn">{{locale.greetingpin}}</h4>
+    </span>
+    <h4 class="signin-heading black" ng-show="changepin">{{locale.changepinnew}}</h4>
+    
+    <div class="signin">
+        <blockquote class="{{!error||'error'}}" ng-show="error || pininvalid">
+            <h5 class="text-danger" ng-show="pinmismatch">{{locale.retrypin}}</h5>
+            <h5 class="text-danger" ng-show="pininvalid">{{locale.createpinerror}}</h5>
+            <h5 class="text-danger" ng-show="pinfail">{{locale.pinincorrect}}</h5>
+            <h5 class="text-danger" ng-show="sessiontimeout">{{locale.loginexpired}}</h5>
+            <h5 class="text-danger" ng-show="pinfail && failCounter==1">{{failCounter}} of {{maxCounter}} - {{locale.failed1}}</h5>
+            <h5 class="text-danger" ng-show="pinfail && failCounter==2">{{failCounter}} of {{maxCounter}} - {{locale.failed2}}</h5>
+            <h5 class="text-danger" ng-show="pinfail && failCounter==3">{{failCounter}} of {{maxCounter}} - {{locale.failed3}}</h5>
+            <h5 class="text-danger" ng-show="pinfail && failCounter==4">{{failCounter}} of {{maxCounter}} - {{locale.failed4}}</h5>
+            <h5 class="text-danger" ng-show="pinfail && failCounter==5">{{failCounter}} of {{maxCounter}} - {{locale.failed5}}</h5>
+        </blockquote>
+        <div class="pinpad-btn">
+            <div class="centre">
+                <div class="ppad">
+                    <button class="btn btn-white dot" ng-class="{'dot-show': dot[0], '': !dot[0]}">&#9679;</button>
+                </div>
+                <div class="ppad">
+                    <button class="btn btn-white dot" ng-class="{'dot-show': dot[1], '': !dot[1]}">&#9679;</button>
+                </div>
+                <div class="ppad">
+                    <button class="btn btn-white dot" ng-class="{'dot-show': dot[2], '': !dot[2]}">&#9679;</button>
+                </div>
+                <div class="ppad">
+                    <button class="btn btn-white dot" ng-class="{'dot-show': dot[3], '': !dot[3]}">&#9679;</button>
+                </div>
+            </div>
+        </div>
+        <p/>
+        <div class="keyboard centre">
+            <div class="keyboardRow1">
+                <button class="btn btn-default btn-lg btn-pinpad" value="1" fast-click="buttonHit('1')">1</button>
+                <button class="btn btn-default btn-lg btn-pinpad" value="2" fast-click="buttonHit('2')">2</button>
+                <button class="btn btn-default btn-lg btn-pinpad" value="3" fast-click="buttonHit('3')">3</button>
+            </div>
+            <div class="keyboardRow2">
+                <button class="btn btn-default btn-lg btn-pinpad" value="4" fast-click="buttonHit('4')">4</button>
+                <button class="btn btn-default btn-lg btn-pinpad" value="5" fast-click="buttonHit('5')">5</button>
+                <button class="btn btn-default btn-lg btn-pinpad" value="6" fast-click="buttonHit('6')">6</button>
+            </div>
+            <div class="keyboardRow3">
+                <button class="btn btn-default btn-lg btn-pinpad" value="7" fast-click="buttonHit('7')">7</button>
+                <button class="btn btn-default btn-lg btn-pinpad" value="8" fast-click="buttonHit('8')">8</button>
+                <button class="btn btn-default btn-lg btn-pinpad" value="9" fast-click="buttonHit('9')">9</button>
+            </div>
+            <div class="keyboardRow4">
+                <button class="btn btn-default btn-lg btn-pinpad btn-offset1" value="0" fast-click="buttonHit('0')">0</button>
+                <button class="btn btn-lg btn-pinpad btn-del" value="back" fast-click="buttonHit('back')">
+                    <span class="glyphicon glyphicon-arrow-left"></span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="ybox" ng-hide="changepin">
+        <table class="container safety">
+            <tr>
+            <td class="icon">
+            <i class="fa fa-exclamation-triangle fa-2x"></i>
+            </td>
+            <td class="text">{{locale.safetyMessage}}
+            </td>
+            </tr>
+        </table>
+        </div>
+    </div>

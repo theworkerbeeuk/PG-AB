@@ -1,0 +1,47 @@
+<div class="control-group">
+    <h4 class="signin-heading black">{{selectedCommission.title}} ({{selectedCommission.referenceNo}})</h4>
+    <div class="container centre-box">
+        <h5 class="page-header"><strong>{{locale.new}}</strong></h5>
+        <button type="submit" class="btn btn-default btn-lg btn-block" ng-click="newObservation()">
+            <div class="pad-left pull-left">{{locale.observation}}</div>
+        </button>
+        <button type="submit" class="btn btn-default btn-lg btn-block" ng-click="newAudit()">
+            <div class="pad-left pull-left">{{locale.audit}}</div>
+        </button>
+        <button type="submit" class="btn btn-default btn-lg btn-block" ng-click="newInspection()">
+            <div class="pad-left pull-left">{{locale.inspection}}</div>
+        </button>
+    </div>
+    <br/>
+    <div class="container centre-box">
+        <h5 class="page-header"><strong>{{locale.inProg}}</strong></h5>
+        <div>
+            <button type="submit" class="btn btn-default btn-lg btn-block" ng-click="inProgressActions()">
+                <div class="pad-left pull-left">{{locale.actions}}</div>
+                <div class="pad-right pull-right">
+                    <div class="badge">{{actionsLen}}</div>
+                </div>
+            </button>
+            <button type="submit" class="btn btn-default btn-lg btn-block" ng-click="inProgressAudits()">
+                <div class="pad-left pull-left">{{locale.audits}}</div>
+                <div class="pad-right pull-right">
+                    <div class="badge">{{audlist[selectedCommission.title].length || 0}}</div>
+                </div>
+            </button>
+            <button type="submit" class="btn btn-default btn-lg btn-block" ng-click="inProgressInspections()">
+                <div class="pad-left pull-left">{{locale.inspections}}</div>
+                <div class="pad-right pull-right">
+                    <div class="badge">{{insplist[selectedCommission.title].length || 0}}</div>
+                </div>
+            </button>
+                <div ng-show="loadingLarge" class="mainspin" centred-spin>    </div>
+        </div>
+        
+        <p class="space"></p>
+    </div>
+
+
+    <div class="navbar navbar-fixed-bottom pad-left pad-right black">
+        <button class="btn btn-lg btn-white" type="button" ng-click="goback()">{{locale.back}}</button>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="control-group">
+    <h4 class="signin-heading black">{{comission.title}} ({{comission.id}})</h4>
+    <div class="signin">
+        <blockquote class="{{!error||'error'}}" ng-show="error">
+            <h5 class="text-danger" >
+            </h5>
+            </blockquote>
+        </div>
+<div class="container">
+<h5><strong>{{locale.reassignActionReason}} ({{action.summary.length || 0}} of 500 characters)</strong>  </h5>
+<form class="form" role="form">
+  <div class="form-group">
+    <textarea class="form-control" maxlength="500" rows="12" ng-model="observation.actiondetail"></textarea>
+  </div>
+</form>    
+</div>
+      
+        
+<div class="navbar navbar-fixed-bottom pad-left pad-right black">
+  <button class="btn btn-lg btn-white pull-left" type="button" ng-click="back()">
+    {{locale.back}}
+  </button>
+  
+    <button class="btn btn-lg btn-success pull-right" type="button" ng-click="finish()">{{locale.finish}}
+  </button> 
+    
+    
+</div>
+</div>    

@@ -1,0 +1,146 @@
+<h4 class="signin-heading black">{{isInspection? locale.yjs280: locale.yjs370}}</h4>
+<div class="signin">
+    <blockquote class="error" ng-show="errmsg">
+        <h5 class="text-danger">{{errmsg}}</h5>
+    </blockquote>
+</div>
+<div class="panel-group col-md-12" id="accordion">
+    <h5 ng-show="audinsp.id"><strong>ID: </strong>{{audinsp.id}}</h5>
+    <div bindonce ng-repeat="qheader in selectedQuestionHeaders" class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <div class="accordion-toggle" ng-click="expandThis(qheader,selectedQuestionHeaders)" data-toggle="collapse" data-parent="#accordion" href="#{{qheader.qdiv}}">
+                    <b>{{qheader.name}}</b>&nbsp;{{qheader.answeredQuestions.length}}/{{qheader.questions.length}}
+                    <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': qheader.open, 'glyphicon-chevron-right': !qheader.open}"></i>
+                </div>
+            </h4>
+        </div>
+        <div id="{{qheader.qdiv}}" class="panel-collapse collapse {{qheader.in}}">
+            <!--Bootstrap Carousel-->
+            <div class="carousel slide" data-interval="false" id="{{qheader.qdiv}}Carousel">
+                <div class="carousel-inner">
+                    
+<!--
+                    <div bindonce ng-repeat="question in qheader.questions" class="item" ng-class="question.active">
+-->
+                        <div class="comment-box" ng-hide="comment">
+                            <h5>
+                                <strong>{{locale.comment}} ({{question.comment.length || 0}} of 500 characters)</strong>
+                            </h5>
+                            <textarea id="{{qheader.qdiv}}comment{{currentSlide}}" class="form-control" maxlength="500" rows="2" ng-model="question.comment"></textarea>
+                        </div>
+                        <h4>
+                            <b>{{locale.question}} {{currentSlide+1}}</b>
+                            <!-- removed clause from below - it shouldn't hide the back and forward buttons ng-hide="(qheader.answeredQuestions.length==qheader.questions.length-1)" -->
+                            <div  class="audit-slide">
+                                <a ng-click="nextfree(qheader, currentSlide)" class="carouselctrl-double fa fa-3x fa-angle-double-right pull-right"></i></a>
+                                <a ng-click="selectnext(qheader, currentSlide)" class="carouselctrl fa fa-2x fa-chevron-right pull-right">&nbsp;&nbsp;</a>
+                                <a ng-click="selectprev(qheader, currentSlide)" class="carouselctrl fa fa-2x fa-chevron-left pull-right">&nbsp;&nbsp;</a>
+                                
+                                <!--a ng-click="selectprev(qheader, $index, true)" class="carouselctrl fa fa-2x fa-backward pull-right">&nbsp;&nbsp;</a--></div>
+                        </h4>{{question.question}}
+                        <div class="audbox" ng-hide="isInspection">
+                            <!-- Inline error message for rating -->
+                            <span id="title{{question.id}}_rating">
+                                <b>{{locale.auditrating_colon}}</b>
+                                <span ng-show="ratingerr" id="err{{question.id}}_rating" class="redText">{{locale.pleaseindicate_colon}}</span>
+                                <span ng-show="question.norating">{{locale.audit_rating_not_required}}</span>
+                            </span>
+                            <br>
+                            <!-- Displays filled stars -->
+                            <div class="star-block" ng-class="{'greyed-out':question.norating}">
+                                <div bindonce ng-repeat="rating in ratings" id="star{{question.id}}_{{rating.name}}" ng-click="setRating(rating.name,question)" class="rating">
+                                    <img src="img/star-o.png" ng-show="!question.norating && question.rating <rating.name" />
+                                    <img src="img/star-grey-o.png" ng-show="question.norating" />
+                                    <img src="img/star-yell.png" ng-show="!question.norating && question.rating >= rating.name" />
+                                </div>
+                            </div>
+                            <div>
+                                <div bindonce class="num" ng-class="{'greyed-out':question.norating}" ng-repeat="rating in ratings">{{$index}}</div>
+                            </div>
+                        </div>
+                        <!-- Inline error message for satisfaction -->
+                        <div class="satisbox">
+                            <span id="title{{question.id}}_satisfaction">
+                                <b>{{locale.satisfactory_qm}}</b>
+                            </span>
+                            <span ng-show="satiserr" id="err{{question.id}}_satisfaction" class="redText" >{{locale.pleaseindicate_colon}}</span>
+                        </div>
+                        <!-- Our three satisfaction buttons -->
+                        <div class="audit-btn btn-group btn-group-justified">
+                            <!-- Make it green if selected OR if no satisfaction was set yet, otherwise default display -->
+                            <div ng-class="{'btn btn-success': question.satisfaction=='Y', 'btn': question.satisfaction!='Y'}" ng-click="setSatisfaction('Y',question)">
+                                <!-- Fill it if selected OR display empty icon -->
+                                <i id="eval{{question.id}}_Y" ng-class="{'fa fa-thumbs-up fa-lg': question.satisfaction=='Y', 'fa fa-thumbs-o-up fa-lg': question.satisfaction!='Y'}"></i> {{locale.yes}}</div>
+                            <!-- Make it red if selected OR if no satisfaction was set yet, otherwise default display -->
+                            <div ng-class="{'btn btn-danger': question.satisfaction=='N', 'btn': question.satisfaction!='N'}" ng-click="setSatisfaction('N',question)">
+                                <!-- Fill it if selected OR display empty icon -->
+                                <i id="eval{{question.id}}_N" ng-class="{'fa fa-thumbs-down fa-lg': question.satisfaction=='N', 'fa fa-thumbs-o-down fa-lg': question.satisfaction!='N'}"></i> {{locale.no}}</div>
+                            <!-- Make it orange if selected OR if no satisfaction was set yet, otherwise default display -->
+                            <div ng-class="{'btn btn-default': question.satisfaction=='X', 'btn': question.satisfaction!='X'}" ng-click="setSatisfaction('X',question)">
+                                <!-- Fill it if selected OR display empty icon -->
+                                <i id="eval{{question.id}}_X" ng-class="{'fa fa-circle fa-lg': question.satisfaction=='X', 'fa fa-circle-o fa-lg': question.satisfaction!='X'}"></i> {{locale.notapplicable}}</div>
+                        </div>
+                        
+                        
+                        
+                         <div class="audobs">
+                            <div class="pull-right">
+                                <span ng-show="hasObservations">
+                                    <strong>Observations </strong> ({{observationsCount}})</i> 
+                                </span>
+                                <span ng-show="question.observationClient.actions.length > 0">
+                                    <strong>Actions</strong> ({{totalActionsCount}})</i>
+                                </span>
+                            </div>
+                        
+                            <span class="clearfix"></span>
+                        </div>
+                        
+                        
+                        <div ng-show="question.comment">
+                            <div ng-show="comment || question.answered">
+                                <p>
+                                    <strong>{{locale.commentsColon}}</strong>{{question.comment}}
+                                </p>
+                            </div>
+                        </div>
+                        <button class="pull-left pad-right btn btn-default" ng-hide="question.answered" ng-click="addComment(question, qheader,currentSlide)">{{locale.comment}}</button>&nbsp;&nbsp;&nbsp;
+                        <button ng-hide="question.answered" class="pull-right btn btn-success" ng-click="validateAnswer(question,qheader,1, currentSlide)">{{locale.done}}</button>
+                        <button ng-show="question.answered" class="pull-right btn btn-danger" ng-click="resetAnswer(question,qheader)">{{locale.clear}}</button>
+                        <button class="observation btn btn-default pull-right" ng-click="validateAnswer(question,qheader,1, currentSlide, true)" ng-show="showObservation(question)">{{locale.newObs}}</button>
+            
+<!--
+                    </div>
+-->
+        
+        
+                </div>
+            </div>
+        </div>
+    </div>
+    <p class="space"></p>
+    <p class="space"></p>
+    <p class="space"></p>
+</div>
+<!-- <div ng-show="sending" class="mainspin" centred-spin>
+</div>
+-->
+<p class="space"></p>
+    <p class="space"></p>
+    <p class="space"></p>
+
+<div class="navbar navbar-fixed-bottom pad-left pad-right black">
+    <div>
+        <!-- remove for now - as it means answers are not saved and confuses the user if they hit pause or back they go to same place if they hit pause it saves the work so they should always hit pause <button type="submit" class="pull-left btn btn-white btn-lg" ng-show="returnTo" ng-click="goback()">{{locale.back}}</button>
+-->
+        <button type="submit" class="pull-right btn btn-success btn-lg" ng-click="finish()" ng-show="isFinished()">{{locale.finish}}
+            <i class="fa fa-spinner fa-spin" ng-show="sending"></i>
+        </button>
+        <button type="submit" class="pull-right btn btn-yellow btn-lg" ng-click="continue()" ng-hide="isFinished()">{{locale.pause}}</button>
+        
+<!--
+         <button type="submit" class="pull-right btn btn-yellow btn-lg" ng-click="test()" ng-hide="isFinished()">test</button>
+-->
+    </div>
+</div>

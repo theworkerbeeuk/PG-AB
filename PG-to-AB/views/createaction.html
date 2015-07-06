@@ -1,0 +1,106 @@
+<div class="control-group">
+    <h4 class="signin-heading black">{{locale.addAction}}</h4>
+    <div class="signin">
+        <blockquote class="error" ng-show="error">
+            <h5 class="text-danger">{{error}}</h5>
+        </blockquote>
+    </div>
+    <div class="container">
+        <div class="panel-group col-md-12" id="accordion">
+            <p/><br/>
+            <h5 class="centre-box page-header">
+                <strong>Observation:</strong> {{observation.cat.name}} > {{observation.type.name}}</h5>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <div class="accordion-toggle" ng-click="ctoggle(0)" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                            <b>
+                                <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': copen[0], 'glyphicon-chevron-right': !copen[0]}"></i>{{locale.actionType}}</b>&nbsp;{{action.type.name}}</div>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse">
+                    <!-- <div class="input-group search-action">
+                    <input type="text" class="form-control" ng-model="searchfor" placeholder="Search" name="srch-term" id="action">
+                    <div class="input-group-btn">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </div>
+                </div>
+-->
+                   
+                    <div class="panel-body">
+                        <div ng-repeat="s in actionMeta.type | orderBy:'name' | actiontype:observation.type.id" class="btn-link btn-block" type="button" ng-click="actionType(s)" data-toggle="collapse" data-parent="#accordion" href="#collapseOne #collapseRisk">{{s.name}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <div class="accordion-toggle" ng-click="ctoggle(1)" data-toggle="collapse" data-parent="#accordion" href="#collapseRisk">
+                            <b>
+                                <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': copen[1], 'glyphicon-chevron-right': !copen[1]}"></i>{{locale.actionRisk}}</b>&nbsp;{{action.risk.name}}</div>
+                    </h4>
+                </div>
+                <div id="collapseRisk" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div ng-repeat="s in actionMeta.risk | orderBy:'id' | filter:searchfor" class="btn-link btn-block" type="button" ng-click="risk(s)" data-toggle="collapse" data-parent="#accordion" href="#collapseOne #collapseRisk #collapseOrg">&nbsp;{{s.name}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <div class="accordion-toggle" ng-click="ctoggle(2)" data-toggle="collapse" data-parent="#accordion" href="#collapseOrg">
+                            <b>
+                                <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': copen[2], 'glyphicon-chevron-right': !copen[2]}"></i>{{locale.actionCompany}}</b>&nbsp;{{action.organisation.organisationName}}</div>
+                    </h4>
+                </div>
+                <div id="collapseOrg" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div ng-repeat="s in actionableUsers[cid].commissionUsers  | orderBy:'organisationName'" class="btn-link btn-block" type="button" ng-click="organisation(s)" data-toggle="collapse" data-parent="#accordion" href="#collapseOne #collapseRisk #collapseOrg #collapseOwner">&nbsp;{{s.organisationName}}</div>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <div class="accordion-toggle" ng-click="ctoggle(3)" data-toggle="collapse" data-parent="#accordion" href="#collapseOwner">
+                            <b>
+                                <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': copen[3], 'glyphicon-chevron-right': !copen[3]}"></i>{{locale.actionOwner}}</b>&nbsp;{{action.owner.userInfoName}}</div>
+                    </h4>
+                </div>
+                
+
+                <div id="collapseOwner" class="panel-collapse collapse">
+                    <div class="allocated-bar">
+                <button class="btn pull-right" ng-class="{'black':selectedAllocation=='','white':selectedAllocation=='A'}"
+                        ng-click="select('');">{{locale.allcontacts}}</button>
+                <button class="btn pull-right allocated" ng-class="{'black':selectedAllocation=='A','white':selectedAllocation==''}"
+                        ng-click="select('A');">{{locale.allocated}}</button>
+            </div>
+<!--
+                    <div class="input-group search-action">
+                        <input type="text" class="form-control" ng-model="searchOwner" placeholder="Search" name="srch-term" id="action">
+                        <div class="input-group-btn">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </div>
+                    </div>
+-->
+                    <div class="panel-body">
+                        <div ng-repeat="s in action.organisation.organisationUsers | orderBy:'userInfoName' |filter:{allocationType:selectedAllocation}" class="btn-link btn-block" type="button" ng-click="actionOwner(s)" data-toggle="collapse" data-parent="#accordion" href="#collapseOne #collapseRisk #collapseOrg #collapseOwner">{{s.userInfoName}}</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="space"></div>
+<div class="navbar navbar-fixed-bottom pad-left pad-right black">
+    <div class="centre">
+        <button type="submit" class="pull-left btn btn-white btn-lg" ng-click="go('/sataction')">{{locale.back}}</button>
+        <button type="submit" class="pull-right btn btn-success btn-lg" ng-click="continue()">{{locale.continue}}</button>
+    </div>
+</div>

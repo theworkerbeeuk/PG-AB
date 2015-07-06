@@ -1,0 +1,85 @@
+<h4 class="signin-heading black">{{isInspection? locale.yjs250 : locale.yjs340}}</h4>
+<div class="control-group">
+    <div class="signin">
+        <blockquote class="error" ng-show="audmenuError">
+            <h5 class="text-danger" ng-show="audit.org==''">{{locale.selorg}}</h5>
+            <h5 class="text-danger" ng-show="audit.contact==''">{{locale.selwho}}</h5>
+            <h5 class="text-danger" ng-show="audit.cat==''">{{locale.selcat}}</h5>
+            <h5 class="text-danger" ng-show="audit.type==''">{{locale.seltype}}</h5>
+        </blockquote>
+    </div>
+</div>
+<div class="panel-group col-md-12" id="accordion">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <div class="accordion-toggle" ng-click="orgopen=!orgopen; cntopen=false; catopen=false; typopen=false" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                    <b>{{locale.auditorg}}</b> {{audit.org.organisationName}}
+                    <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': orgopen, 'glyphicon-chevron-right': !orgopen}"></i>
+                </div>
+            </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <div ng-repeat="s in actionableUsers[cid].commissionUsers | orderBy:'organisationName'" class="btn-link btn-block" type="button" ng-click="setOrganisation(s)" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">&nbsp;{{s.organisationName}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <div class="accordion-toggle" ng-click="cntopen=!cntopen; orgopen=false; catopen=false; typopen=false" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                    <b>{{locale.auditwho}}</b> {{audit.contact}}
+                    <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': cntopen, 'glyphicon-chevron-right': !cntopen}"></i>
+                </div>
+            </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse">
+            <div class="allocated-bar">
+                <button class="btn pull-right" ng-class="{'black':selectedAllocation=='','white':selectedAllocation=='A'}"
+                        ng-click="selectedAllocation=''">{{locale.allcontacts}}</button>
+                <button class="btn pull-right allocated" ng-class="{'black':selectedAllocation=='A','white':selectedAllocation==''}"
+                        ng-click="selectedAllocation='A'">{{locale.allocated}}</button>
+            </div>
+            <div class="panel-body">
+                <div ng-repeat="org in audit.org.organisationUsers | orderBy:'userInfoName' |filter:{allocationType:selectedAllocation}" class="btn-block btn-link" type="button" ng-click="setContact(org)" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">&nbsp;{{org.userInfoName}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <div class="accordion-toggle" ng-click="catopen=!catopen; cntopen=false; orgopen=false; typopen=false" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                    <b>{{locale.whichCat}}</b> {{audit.cat.categoryName}}
+                    <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': catopen, 'glyphicon-chevron-right': !catopen}"></i>
+            </h4>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div ng-repeat="cat in audit.categories | orderBy:'categoryName'" class="btn-block btn-link" type="button" ng-click="setCategory(cat)" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">{{cat.categoryName}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <div class="accordion-toggle" ng-click="typopen=!typopen; cntopen=false; catopen=false; orgopen=false" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+                        <b>{{locale.whichType}}</b> {{audit.type.name}}
+                        <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': typopen, 'glyphicon-chevron-right': !typopen}"></i>
+                    </div>
+                </h4>
+            </div>
+            <div id="collapseFour" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div ng-repeat="type in faudit | orderBy:'name'" class="btn-block btn-link" type="button" ng-click="setType(type)" data-toggle="collapse" data-parent="#accordion" href="#collapseThree #collapseFour">{{type.name}}</div>
+                </div>
+            </div>
+        </div>{{noqs}}</div>
+</div>
+<p class="space"></p>
+<div class="navbar navbar-fixed-bottom pad-left pad-right black">
+    <div class="centre">
+        <button type="submit" class="pull-left btn btn-white btn-lg" ng-click="goback()">{{locale.back}}</button>
+        <button type="submit" class="pull-right btn btn-success btn-lg" ng-click="continue()">{{locale.continue}}</button>
+    </div>
+</div>

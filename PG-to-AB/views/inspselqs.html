@@ -1,0 +1,38 @@
+<h4 class="signin-heading black">{{locale.yjs260}}</h4>
+<div class="modal fade" id="errorModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!--button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button-->
+                <h4 class="modal-title redText">{{locale.error}}</h4>
+            </div>
+            <div class="modal-body">{{locale.selectqheaders}}</div>
+            <div class="modal-footer">
+                <center>
+                    <button type="button" class="btn btn-danger btn-lg" data-dismiss="modal" ng-click="close()">{{locale.ok}}</button>
+                </center>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container audselqs">
+    <ul class="container">
+        <li ng-repeat="qheader in inspectionHeaders" class="list-group-item row">
+            <span class="pull-left">{{qheader.name}}</span>
+            <input class="pull-right" bs-switch ng-model="qheader.isActive" switch-on-label="<span class='fa fa-3x fa-check'></span>" switch-off-label="<span class='fa fa-3x fa-times'></span>" switch-active="{{qheader.isActive}}" ng-click="qheader.isActive=!qheader.isActive" switch-type="checkbox" switch-size="small" >
+        </li>
+    </ul>
+</div>
+
+<div class="signin">
+    <blockquote class="error" ng-show="error">
+        <h5 class="text-danger">{{locale.selectqheaders}}</h5>
+    </blockquote>
+</div>
+<p class="space"></p>
+<div class="navbar navbar-fixed-bottom pad-left pad-right black">
+    <div class="centre">
+        <button type="submit" class="pull-left btn btn-white btn-lg" ng-click="goback()">{{locale.back}}</button>
+        <button type="submit" class="pull-right btn btn-success btn-lg" ng-click="continue()">{{locale.continue}}</button>
+    </div>
+</div>

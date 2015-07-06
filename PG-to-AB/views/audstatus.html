@@ -1,0 +1,89 @@
+<h4 class="signin-heading black">{{locale.yjs360}}</h4> 
+
+<div class="container">
+    
+    <div class="dropdown">
+    <button class="btn btn-default btn-block btn-lg" data-toggle="dropdown">
+        <div class="wrap pad-left pull-left">
+      {{ct.title}} 
+            <span ng-show="ct.referenceNo">
+            ({{ct.referenceNo}})
+            </span>
+        </div>
+        <div class="pull-right caret caret-right"></div>
+<!-- caret not showing needs style to be white/inverse as black on black not showing-->
+    </button>
+    <ul class="actionlist pull-right dropdown-menu" role="menu">
+      <li><a href="" ng-click="all()">{{locale.all}}</a></li>
+      <li class="divider"></li>
+      <li ng-repeat="c in commissions | orderBy:'title'" ng-show="audlist[c.title].length>0">
+          <a href="" class="wrap" ng-click="select(c)">{{c.title}} ({{c.referenceNo}})</a>
+      </li>
+        
+    </ul>
+  </div>
+<p></p>
+<table class="table comms table-bordered">
+<tr class="black action-heading">
+    <td class="date">
+        <a class="btn btn-default btn-block" ng-click="reverse=!reverse">{{locale.date}}
+        <span class="pull-right" ng-class="{'caret-up':!reverse,'caret':reverse}"></span>
+        </a>
+    </td>
+    
+    <td class="data">
+      <a class="pull-right overdue btn"
+         ng-class="{'btn-white':!filterod, 'btn-grey':filterod}"
+         ng-click="overduefilter()">
+          {{locale.overdue}}
+        </a> 
+    
+      <a class="pull-right unread btn btn-white" ng-click="unread()"
+          ng-class="{'btn-white':!filterur, 'btn-grey':filterur}"
+         >{{locale.unread}}&nbsp;
+        </a>
+  
+    </td>    
+</tr>
+<tr ng-repeat="au in al | orderBy:'dueDate':reverse | overdueaud:filterod  | unreadaud:filterur" ng-class="{'action-read':au.read}">
+    
+<td class="centre">{{au.dueDate | date:'dd/MM/yy'}} 
+    <br><br>
+    <p ng-show="overdue(au.dueDate, true)">
+        <i class="fa fa-exclamation-triangle fa-3x"></i>
+    </p>
+</td>
+<td>
+    
+        <a href="" ng-click="audit(au)" class="actions-black"> 
+        <h5 ng-show="!ct.referenceNo"><b>{{au.commission.title}} ({{au.commission.referenceNo}})</b></h5>
+       <strong>{{au.contact}} </strong>
+            <i class="alsize glyphicon glyphicon-chevron-right pull-right"></i>
+
+        <p></p>
+          {{au.organisation}}  ({{au.organisationId}})
+        <!-- observation type description -->
+        <p>{{au.categoryName}} > {{au.typeName}}<br>           
+<!--
+        {{audit.startDt} }
+-->
+        </p>
+        <!-- action type-->
+        <p ng-show="au.noOfQs">{{au.answQs}} {{locale.of}}&nbsp;{{au.noOfQs}} completed
+          
+        </p>
+        <small class="pull-right">{{au.id}}</small>
+        </a>
+</td>          
+</tr>
+</table>
+<p class="space"/>
+
+</div>
+    
+
+</div>
+</div>
+<div class="navbar navbar-fixed-bottom pad-left pad-right black">
+        <button type="submit" class="pull-left btn btn-white btn-lg" ng-click="goback()">{{locale.back}}</button>
+</div>
